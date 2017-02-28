@@ -4,6 +4,8 @@ import addresses.dto.AddressDTO;
 import addresses.dto.AddressResult;
 import addresses.dto.DetailedAddress;
 import addresses.dto.SimpleAddress;
+import addresses.repository.AddressFinderRepository;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,8 @@ public class AddressFinderService {
 
     @Autowired
     private ObjectMapper objectMapper;
+    @Autowired
+    private AddressFinderRepository addressFinderRepository;
 
     public AddressDTO getAddresses(String postcode) throws IOException {
         List<AddressResult> addressResults;
@@ -38,6 +42,7 @@ public class AddressFinderService {
             SimpleAddress simpleAddress = objectMapper.readValue(new URL(simpleAddressUrl), SimpleAddress.class);
             addressResults = getSimpleAddressResults(simpleAddress);
         }
+        addressResults.forEach(addressFinderRepository::saveAddress);
 
         return new AddressDTO(addressResults);
     }

@@ -5,6 +5,8 @@ import addresses.dto.AddressResult;
 import addresses.dto.DetailedAddress;
 import addresses.dto.DetailedAddressResult;
 import addresses.dto.SimpleAddress;
+import addresses.repository.AddressFinderRepository;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,8 @@ public class AddressFinderServiceTest {
 
     @Mock
     private ObjectMapper objectMapper;
+    @Mock
+    private AddressFinderRepository addressFinderRepository;
     @InjectMocks
     private AddressFinderService addressFinderService = new AddressFinderService();
 
